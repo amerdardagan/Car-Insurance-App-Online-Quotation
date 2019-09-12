@@ -27,23 +27,69 @@ form.addEventListener ('submit' , function (e) {
 
     //check that all fields have something
     if (make === '' || year === '' || level === '') {
-        console.log ('Error');
+        html.displayError ('All fields are neccessary!')
     } else {
-        console.log ('Alright')
+        //make the quotation//FF1
+        const insurance = new Insurance (make, year, level);
+        const price = insurance.calculateQuotation (insurance);
+
     }
-
-
-
-    console.log (make);
-    console.log (year);
-
+    
 })
 
 }
-
-
-
 //Objects+Prototypes) 
+
+//Everything related to calculation and quotation is insurance //FF2
+
+function Insurance (make, year, level) {
+    this.make = make;
+    this.year = year;
+    this.level = level;
+}
+
+//Calculate the price for the current quotation
+Insurance.prototype.calculateQuotation = function (insurance) {
+    let price;
+    const base = 2000;
+
+    //get make
+    const make = insurance.make;
+
+    /* 1.American---will increase BASE value for 15% (1.15)
+       2.Asian--- 5% (1.05)
+       3.European 30% (1.35)*/
+
+       switch (make) {
+           case '1':
+               price = base * 1.15;
+               break;
+            case '2':
+               price = base * 1.05;
+               break;
+            case '3':
+               price = base * 1.35;
+               break;
+       }
+
+       //get year
+
+        const year = insurance.year;
+        const difference = this.getYearDifference (year);
+
+        //each year cost of insurance will be 3% cheaper (thats why below I needed year difference)
+       price = price - ((difference * 3) * price) / 100;  
+       
+       console.log (price);
+    
+}
+
+
+//get the year difference (from this year selected--new prototype
+Insurance.prototype.getYearDifference = function (year) {
+           return new Date().getFullYear () - year;
+}
+
 
 //OBJECT-all related to HTML goes here
 function HTMLUI () {}
