@@ -29,6 +29,13 @@ function eventListeners () {
     if (make === '' || year === '' || level === '') {
         html.displayError ('All fields are neccessary!')
     } else {
+
+        //clear the previous Quote-so that they dont go one below the other
+        const prevResult = document.querySelector ('#result div'); //it shows only after 1 quote
+        if (prevResult != null) {
+            prevResult.remove()
+        }
+
         //make the quotation//FF1
         const insurance = new Insurance (make, year, level); // enter this later after making object 
         const price = insurance.calculateQuotation (insurance);// enter this after making prototype
@@ -170,7 +177,17 @@ HTMLUI.prototype.showResults = function (price, insurance) {
 
 
         `
+
+        const spinner = document.querySelector ('#loading img');
+        spinner.style.display = 'block';
+
+        setTimeout (function () {
+            spinner.style.display = 'none' //it will be hided
         // Insert this into htnml
+        result.appendChild (div);
+        }, 3000); 
+
+        // After 3s Insert this into htnml
         result.appendChild (div);
 
             
