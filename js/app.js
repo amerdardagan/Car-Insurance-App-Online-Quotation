@@ -34,7 +34,7 @@ function eventListeners () {
         const price = insurance.calculateQuotation (insurance);// enter this after making prototype
         const html = new HTMLUI ();
         //Print the result from HTMLUI object
-        html.showResults (price);
+        html.showResults (price, insurance);
 
     }
     
@@ -45,7 +45,7 @@ function eventListeners () {
 
 //Everything related to calculation and quotation is insurance //FF2
 
-function Insurance (make, year, level) { //interpret const insurance = new Insurace (make, year, level) as .this -currently selected
+function Insurance (make, year, level) { //interpret const insurance = new Insurace (make, year, level) as .this -currently selected//make,year,level value already exists
     this.make = make;
     this.year = year;
     this.level = level;
@@ -135,19 +135,45 @@ HTMLUI.prototype.displayYears = function () {
 
 //Print the result in HTML
 
-HTMLUI.prototype.showResults = function (price) {
+HTMLUI.prototype.showResults = function (price, insurance) {
         //print the result
         const result = document.getElementById ('result');
         //create a div wuth a result
         const div = document.createElement ('div'); //a block for injecting html
+
+        //I want other info printed:make; //Get make from object and assign names//returbs 1,2,3-I want to be written
+        let make = insurance.make 
+        
+        switch (make) {
+            case '1':
+                make='American';
+                break;
+            case '2':
+                make='Asian';
+                break;
+            case '3':
+                make='European';
+                break;
+        }
+
+        
+        console.log (make);
+    
+
         //insert the result
         div.innerHTML = `
-                        <p class="total">Total: ${price}</p
+                        <p class="header">Summary</p>
+                        <p>Make: ${make}</p>
+                        <p>Year: ${insurance.year}</p>
+                        <p>Level: ${insurance.level}</p>
+                        <p class="total">Total: ${price}</p>
+
 
         `
         // Insert this into htnml
         result.appendChild (div);
 
+            
     
 
 }
